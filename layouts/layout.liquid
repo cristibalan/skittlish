@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-{{ '/feed/atom.xml' | assign_to: 'global_feed' }}
-{{ '/feed/all_comments.xml' | assign_to: 'global_comments_feed' }}
+{{ 'http://feeds.feedburner.com/evilchelu' | assign_to: 'global_feed' }}
+{{ 'http://feeds.feedburner.com/evilchelu_comments' | assign_to: 'global_comments_feed' }}
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>
@@ -13,6 +13,10 @@
     - {{ article.title }}
   {% endif %}
 </title>
+
+<link rel="openid.server" href="http://openid.claimid.com/server" />
+<link rel="openid.delegate" href="http://openid.claimid.com/evilchelu" />
+
 <link rel="alternate" type="application/atom+xml" title="{{ site.title }} feed" href="{{ global_feed }}"/>
 <link rel="alternate" type="application/atom+xml" title="{{ site.title }} comments feed" href="{{ global_comments_feed }}"/>
 {{ 'base' | stylesheet }}
@@ -22,7 +26,7 @@
 <![endif]-->
 </head>
 
-<body class="fixed orange">
+<body class="che fixed orange">
 <script type="text/javascript">loadPreferences()</script> 
 
 <div id="wrapper">
@@ -53,19 +57,6 @@
   
   <div id="innerwrapper">
 
-<div class="article">
-  <div class="body">
-  <h2>Skittlish Tips'n'Tricks</h2>
-  <ul>
-    <li>Change the classes for the body tag to set your default site style. also change these in the app.js file (line 66).</li>
-    <li>Remove the scripts and the #options div if you don't want the option switcher.</li>
-    <li>The top menu shows the home section and the sections that are not blogs.</li>
-    <li>Email me at <a href="mailto:evil@che.lu">evil@che.lu</a> if you have any questions.</li>
-    <li>Happy hacking!</li>
-  </ul>
-  </div>
-</div>
-
 {{ content_for_layout }}
 
   </div>
@@ -74,22 +65,24 @@
 
 <div id="sidebar">
 
-<div class="boxy short">
-<h3>boxy short</h3>
+<div class="boxy tall">
+<h3>About</h3>
+<p>I'm Cristi Balan, a freelance web developer currently living in Bucharest, Romania.</p>
 
-<p>You can have, boxes with a short, tall or no background shade, just change the class of the containing div.</p>
+<p>I like CSS, semantic markup, unobtrusive javascript, Ruby on Rails and good coding practices.</p>
 
-<p>Have boxes with smaller text with the class "minor". See the "Recent" boxy below.</p>
+<p>Currently, I am available for freelance work. You can reach me at <a href="mailto:evil@che.lu">evil@che.lu</a>.</p>
 
-</div>
+<p id="subscribe"><a class="feed" href="{{ global_feed }}">subscribe to my feed</a></p>
 
-<div id="search" class="boxy short">
+<div id="search">
   <h3>Search</h3>
   <form method="get" action="/search">
     <fieldset>
       <input class="text" type="text" id="q" value="" name="q"/>
     </fieldset>
   </form>
+</div>
 </div> 
 
 <div class="boxy tall minor">
@@ -115,10 +108,9 @@
 </dd>
 </dl>
 </div>
- 
+
 <div class="boxy short">
   <h3>Archives</h3>
-  <p>This would be much nicer with jamis' month_drop thingy.</p>
   {{ '' | section | months | assign_to: 'home_section' }}
   <ul>
   {% for month in home_section.months %}
@@ -130,58 +122,51 @@
   </ul>
 </div>
 
-{% if site.blog_sections.size > 1 %}
 <div class="boxy short">
-<h3>Categories</h3>
-<p>Lists only blog type categories with at least one article.</p>
-<p>This list uses an ul. You could use a dl with only dd's in it for the same effect. Wouldn't be semantic tho.</p>
-<ul class="sections">
-{% for section in site.blog_sections %}
-  {% if section.articles_count > 0 %}
-  {% unless section.is_home %}
-  <li>{{ section | link_to_section }} ({{ section.articles_count }})</li>
-  {% endunless %}
-  {% endif %}
-{% endfor %}
-</ul>
-</div>
+  <h3>Classification</h3>
 
-{% endif %}
-{% unless site.tags == empty %}
-<div class="boxy short">
-  <p>This would be nicer if we could get the number of articles for each tag.</p>
-  <h3>tags: </h3>
+<dl>
+<dt>Categories</dt>
+<dd>
+  <ul>
+  {% for section in site.blog_sections %}
+    {% if section.articles_count > 0 %}
+    {% unless section.is_home %}
+    <li>{{ section | link_to_section }} ({{ section.articles_count }})</li>
+    {% endunless %}
+    {% endif %}
+  {% endfor %}
+  </ul>
+</dd>
+
+<!--
+<dt>Tags</dt>
+<dd>
   <ul>
   {% for tag in site.tags %} 
     <li>{{ tag | link_to_tag }}</li>
   {% endfor %}
   </ul>
+</dd>
+-->
+</dl>
 </div>
 
-{% endunless %} 
 <div class="boxy tall">
-<h3>boxy tall</h3>
-<p>When using a tall box, make sure it's got plenty of content or that it's immediately followed by a short boxy. It might look a bit chopped off otherwise.</p>
+<h3>People</h3>
 <dl>
-  <dt>thing 1</dt>
-  <dd><a href="#">value 1</a></dd>
-  <dd><a href="#">value 2</a></dd>
-  <dd><a href="#">value 3</a></dd>
-  <dd><a href="#">value 4</a></dd>
-  <dd><a href="#">value 5</a></dd>
-  <dd><a href="#">value 6</a></dd>
-  <dd><a href="#">value 6</a></dd>
+  <dt>Local peeps</dt>
+  <dd><a href="http://tase.ro/">Adrian Tanase</a></dd>
+  <dd><a href="http://www.toth.ro/">Gabi Toth</a></dd>
+  <dd><a href="http://mordax.ro/">Marius Zaharia</a></dd>
 
-  <dt>thing 1</dt>
-  <dd><a href="#">value 1</a></dd>
-  <dd><a href="#">value 2</a></dd>
-  <dd><a href="#">value 3</a></dd>
-  <dd>value 4</dd>
-  <dd>value 5</dd>
-  <dd><a href="#">value 6</a></dd>
-  <dd><a href="#">value 6</a></dd>
+  <dt>World wide posse</dt>
+  <dd><a href="http://iamrice.org/">Damien Tanner</a></dd>
+  <dd><a href="http://www.fearoffish.co.uk/">Jamie van Dyke</a></dd>
+  <dd><a href="http://technomancy.us/">Phil Hagelberg</a></dd>
+  <dd><a href="http://blog.caboo.se/">caboo.se</a></dd>
 
-</dl>
+  </dl>
 </div>
 
 </div>
@@ -208,12 +193,18 @@
 </div>
 
 <div id="footer">
-<p>Copyright &copy; 2006, Your Name. Valid <a href="http://validator.w3.org/check/referer">XHTML</a> and <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a>.</p>
+<p>Copyright &copy; 2006, Cristi Balan. Valid <a href="http://validator.w3.org/check/referer">XHTML</a> and <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a>.</p>
 <p>Using <a href="http://evil.che.lu/projects/skittlish">skittlish</a> on <a href="http://publishwithimpunity.com/">mephisto</a>.</p>
 </div>
 
 </div>
 
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-563854-1";
+urchinTracker();
+</script>
 </body>
 
 </html>

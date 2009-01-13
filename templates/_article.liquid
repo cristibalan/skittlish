@@ -1,7 +1,7 @@
 <div class="article">
 
   <h2 class="title">{{ article | link_to_article }}</h2>
-  <p class="meta">written by {{ article.author.login }} on {{ article.published_at | format_date: 'standard', true }}</p>
+  <p class="meta">written by Cristi Balan on {{ article.published_at | format_date: 'standard', true }}</p>
   <div class="body">
     {{ article.body }}
   </div>

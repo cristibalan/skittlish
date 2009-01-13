@@ -72,7 +72,7 @@ function getCookie(name) {
 function loadPreferences() {
   var cookie = getCookie('skittlish');
   if (cookie == '') {
-    cookie = 'fixed orange';
+    cookie = 'che fixed orange';
   }
   document.getElementsByTagName('body')[0].className = cookie;
 }
