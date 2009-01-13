@@ -1,0 +1,42 @@
+{% include 'article' with article %}
+
+{% unless article.comments == empty %}
+<div id="commentslist">
+<h3 id="comments" class="content">Comments</h3>
+<ul>
+{% for comment in article.comments %}
+<li class="comment {{comment.presentation_class}}" id="comment-{{ comment.id }}">
+  <p class="meta"><strong>{{ comment.author_link }}</strong> on <em>{{ comment.created_at | format_date: 'short' }}</em></p>
+  <div class="body">
+  {{ comment.body }}
+  </div>
+</li>
+{% endfor %}
+</ul>
+</div>
+{% endunless %}
+
+<div id="commentform">
+  <h3 class="content">
+    {% if article.accept_comments %}
+      Post a comment
+    {% else %}
+      Comments are closed
+    {% endif %}
+  </h3>
+{% commentform %}
+<fieldset>
+<dl>
+<dt><label>Name:</label></dt>
+  <dd>{{ form.name }}</dd>
+<dt><label>Email:</label></dt>
+  <dd>{{ form.email }}</dd>
+<dt><label>Url:</label></dt>
+  <dd>{{ form.url }}</dd>
+<dt><label>Comment (<a href="http://textism.com/tools/textile/">textile</a> enabled):</label></dt>
+  <dd>{{ form.body }}</dd>
+</dl>
+</fieldset>
+{{ form.submit }}
+{% endcommentform %}
+</div>
